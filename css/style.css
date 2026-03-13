@@ -520,10 +520,63 @@ footer {
   transform: translateY(0);
 }
 
+/* ── Hamburger button (hidden on desktop) ── */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  border-radius: 6px;
+  transition: color 0.2s;
+}
+.nav-toggle:hover { color: var(--accent); }
+
 /* ── Responsive ── */
 @media (max-width: 600px) {
-  nav { padding: 0 16px; }
-  .nav-links { gap: 16px; }
+  nav {
+    padding: 0 16px;
+    position: relative;
+  }
+
+  .nav-toggle { display: block; }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 15, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0 16px;
+    z-index: 99;
+  }
+
+  .nav-links.open { display: flex; }
+
+  .nav-links li {
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links li:last-child { border-bottom: none; }
+
+  .nav-links a {
+    display: block;
+    padding: 14px 24px;
+    font-size: 0.95rem;
+  }
+
   .hero { padding: 56px 0 48px; }
   main { padding: 0 16px 64px; }
+
+  .timeline { padding-left: 64px; }
+  .timeline-date { left: -64px; width: 46px; font-size: 0.65rem; }
+  .timeline-dot { left: -20px; }
 }
