@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab | Yuki</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .lab-hero-note {
+      background: rgba(129, 140, 248, 0.08);
+      border: 1px solid rgba(129, 140, 248, 0.25);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+
+    .lab-hero-note strong { color: var(--accent); }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .tool-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .tool-card-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .tool-card-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .tool-card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* 追加方法のコードブロック */
+    .add-guide {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+    }
+
+    .add-guide h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .add-guide ol {
+      padding-left: 20px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    .add-guide code {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-size: 0.8rem;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'SF Mono', 'Menlo', monospace;
+    }
+  </style>
+</head>
+<body>
+
+<!-- プレビューモーダル -->
+<div id="preview-modal" class="preview-modal">
+  <div class="preview-modal-header">
+    <span class="preview-modal-title" id="preview-title"></span>
+    <div class="preview-modal-actions">
+      <a id="preview-newtab" href="#" target="_blank">別タブで開く ↗</a>
+      <button class="preview-close" onclick="closePreview()">✕</button>
+    </div>
+  </div>
+  <iframe id="preview-iframe" src="" title="ツールプレビュー"></iframe>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Yuki</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="works.html">Works</a></li>
+    <li><a href="3d.html">3D</a></li>
+    <li><a href="lab.html">Lab</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="page-hero">
+    <h1>⚗️ Lab</h1>
+    <p>開発中・動作確認中のツール置き場。ここで試して、完成したら Works へ。</p>
+  </div>
+
+  <div class="lab-hero-note">
+    <strong>新しいツールを追加するには：</strong><br>
+    <code>tools/ツール名/index.html</code> にファイルを置いて、このページの下のリストに追記するだけ。<br>
+    git push すれば即 <code>https://yuki-lm92.github.io/tools/ツール名/</code> で動作確認できます。
+  </div>
+
+  <section>
+    <h2 class="section-title">稼働中ツール</h2>
+    <div class="tool-grid">
+
+      <div class="tool-card">
+        <div class="tool-card-name">SNS分析ダッシュボード</div>
+        <div class="tool-card-desc">CSVをドラッグ&amp;ドロップでグラフ生成。Instagram / X / Facebook対応。</div>
+        <div class="tool-card-actions">
+          <button class="btn-preview" onclick="openPreview('tools/sns-dashboard/index.html', 'SNS分析ダッシュボード')">▶ 開く</button>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-name">プロジェクト管理ツール</div>
+        <div class="tool-card-desc">ボード＋ガントチャート。JSONエクスポート対応。サーバー不要。</div>
+        <div class="tool-card-actions">
+          <button class="btn-preview" onclick="openPreview('tools/project-manager/index.html', 'プロジェクト管理ツール')">▶ 開く</button>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-name">DXインフォ バックナンバー</div>
+        <div class="tool-card-desc">毎日自動生成されたDXコラムのアーカイブビューア。</div>
+        <div class="tool-card-actions">
+          <button class="btn-preview" onclick="openPreview('tools/dx-info/index.html', 'DXインフォ バックナンバー')">▶ 開く</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 開発中ツールはここに追加 -->
+  <!--
+  <section>
+    <h2 class="section-title">開発中</h2>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-card-name">新ツール名</div>
+        <div class="tool-card-desc">説明文</div>
+        <div class="tool-card-actions">
+          <button class="btn-preview" onclick="openPreview('tools/new-tool/index.html', '新ツール名')">▶ 開く</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  -->
+
+  <section>
+    <h2 class="section-title">ツールの追加方法</h2>
+    <div class="add-guide">
+      <h3>新しいツールを作業場に追加する手順</h3>
+      <ol>
+        <li><code>tools/ツール名/</code> フォルダを作成して <code>index.html</code> を置く</li>
+        <li>上の「開発中」セクションのコメントを外して情報を追記する</li>
+        <li><code>git add . && git commit -m "add: ツール名" && git push</code></li>
+        <li><code>https://yuki-lm92.github.io/tools/ツール名/</code> で即確認できる</li>
+        <li>完成したら <code>works.html</code> にカードとして追加する</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Yuki · <a href="https://github.com/Yuki-LM92" style="color:var(--muted); text-decoration:none;" target="_blank">GitHub</a>
+</footer>
+
+<script src="js/preview.js"></script>
+<script>
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if (a.href === location.href) a.classList.add('active');
+  });
+</script>
+
+</body>
+</html>

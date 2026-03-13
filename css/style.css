@@ -321,6 +321,108 @@ footer {
   font-size: 0.8rem;
 }
 
+/* ── Preview Modal ── */
+.preview-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  flex-direction: column;
+}
+
+.preview-modal.open {
+  display: flex;
+}
+
+.preview-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 52px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.preview-modal-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+
+.preview-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.preview-modal-actions a {
+  font-size: 0.78rem;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.preview-modal-actions a:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.preview-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s;
+}
+
+.preview-close:hover { color: var(--text); }
+
+.preview-modal iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: white;
+}
+
+/* ── Card preview button ── */
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.btn-preview {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-preview:hover {
+  background: var(--accent);
+  color: white;
+}
+
 /* ── Responsive ── */
 @media (max-width: 600px) {
   nav { padding: 0 16px; }
