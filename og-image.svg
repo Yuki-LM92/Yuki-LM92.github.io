@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2e2f0"/>
+      <stop offset="60%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="630" fill="#0a0a0f"/>
+
+  <!-- 装飾：右側の円 -->
+  <circle cx="980" cy="315" r="280" fill="none" stroke="#2a2a3d" stroke-width="1"/>
+  <circle cx="980" cy="315" r="200" fill="none" stroke="#1c1c28" stroke-width="1"/>
+  <circle cx="980" cy="315" r="380" fill="none" stroke="#1c1c28" stroke-width="0.5"/>
+
+  <!-- アクセントドット -->
+  <circle cx="980" cy="100" r="6" fill="#818cf8" opacity="0.6"/>
+  <circle cx="1120" cy="260" r="4" fill="#a78bfa" opacity="0.4"/>
+  <circle cx="860" cy="480" r="5" fill="#818cf8" opacity="0.3"/>
+
+  <!-- 左ライン -->
+  <rect x="80" y="160" width="3" height="80" fill="url(#g1)" rx="2"/>
+
+  <!-- 名前 -->
+  <text x="104" y="228" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="96" font-weight="800" fill="url(#g2)">Yuki</text>
+
+  <!-- キャッチコピー -->
+  <text x="104" y="300" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="32" font-weight="700" fill="#e2e2f0">眠っているものを輝かせる人。</text>
+
+  <!-- 説明 -->
+  <text x="106" y="352" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="20" fill="#7878a0">AI活用 · 業務自動化 · ツール開発 · DX支援</text>
+
+  <!-- 区切り線 -->
+  <rect x="104" y="390" width="480" height="1" fill="#2a2a3d"/>
+
+  <!-- URL -->
+  <text x="106" y="420" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="18" fill="#3a3a5d">yuki-lm92.github.io</text>
+</svg>

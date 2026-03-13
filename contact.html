@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Yuki</title>
+
+  <!-- OGP / SNS共有 -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yuki-lm92.github.io/contact.html">
+  <meta property="og:title" content="Contact | Yuki">
+  <meta property="og:description" content="相談・依頼・雑談、お気軽にどうぞ。">
+  <meta property="og:image" content="https://yuki-lm92.github.io/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="description" content="相談・依頼・雑談、お気軽にどうぞ。">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .contact-intro {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .contact-intro p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .contact-intro p + p { margin-top: 12px; }
+
+    .contact-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .contact-tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.78rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .form-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .form-wrap iframe {
+      width: 100%;
+      min-height: 640px;
+      border: none;
+      display: block;
+      /* Google フォームのデフォルト白背景を最小限に */
+      background: white;
+    }
+
+    .form-placeholder {
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 2;
+    }
+
+    .form-placeholder code {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Yuki</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="works.html">Works</a></li>
+    <li><a href="3d.html">3D</a></li>
+    <li><a href="lab.html">Lab</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="page-hero">
+    <h1>Contact</h1>
+    <p>相談・依頼・雑談、お気軽にどうぞ。</p>
+  </div>
+
+  <div class="contact-intro">
+    <p>
+      「こんなこと頼めるかな？」という段階でも大丈夫です。<br>
+      まず話を聞かせてもらって、一緒に考えるところから始めます。
+    </p>
+    <p>
+      すぐに実装の話にはなりません。何が困っているのか、<br>
+      それをどう整理するかを丁寧に確認してから動きます。
+    </p>
+    <div class="contact-tags">
+      <span class="contact-tag">業務改善の相談</span>
+      <span class="contact-tag">ツール開発の依頼</span>
+      <span class="contact-tag">DXどこから始めるか</span>
+      <span class="contact-tag">雑談・壁打ち</span>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">お問い合わせフォーム</h2>
+    <div class="form-wrap">
+      <!-- ↓ GoogleフォームのURLをここに貼り付けてください -->
+      <!-- <iframe src="https://docs.google.com/forms/d/e/XXXXXXXX/viewform?embedded=true" title="お問い合わせフォーム"></iframe> -->
+
+      <div class="form-placeholder">
+        Googleフォームを作成したら、以下のURLをこのファイルに貼り付けてください。<br><br>
+        <code>contact.html</code> の該当箇所のコメントを外してURLを差し込むだけです。<br><br>
+        フォームの共有 → 「埋め込む」→ iframeのsrc属性のURLをコピー
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Yuki · <a href="https://github.com/Yuki-LM92" style="color:var(--muted); text-decoration:none;" target="_blank">GitHub</a>
+</footer>
+
+<script>
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if (a.href === location.href) a.classList.add('active');
+  });
+</script>
+
+</body>
+</html>
