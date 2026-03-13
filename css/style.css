@@ -1,16 +1,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:       #0a0a0f;
-  --surface:  #13131a;
-  --surface2: #1c1c28;
-  --border:   #2a2a3d;
-  --text:     #e2e2f0;
-  --muted:    #7878a0;
-  --accent:   #818cf8;
-  --accent2:  #a78bfa;
-  --green:    #4ade80;
-  --yellow:   #fbbf24;
+  --bg:       #F9F6F1;
+  --surface:  #FFFFFF;
+  --surface2: #F0EBE3;
+  --border:   #E0D8CE;
+  --text:     #1C1814;
+  --muted:    #7A6E65;
+  --accent:   #0D9488;
+  --accent2:  #2DD4BF;
+  --green:    #15803D;
+  --yellow:   #B45309;
   --radius:   12px;
 }
 
@@ -27,7 +27,7 @@ nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(10, 10, 15, 0.85);
+  background: rgba(249, 246, 241, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
@@ -110,7 +110,7 @@ h2.section-title {
   font-weight: 800;
   line-height: 1.15;
   margin-bottom: 20px;
-  background: linear-gradient(135deg, #e2e2f0 0%, #818cf8 55%, #a78bfa 100%);
+  background: linear-gradient(135deg, #1C1814 0%, #0D9488 55%, #2DD4BF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -246,9 +246,9 @@ h2.section-title {
   flex-shrink: 0;
 }
 
-.status-active   { background: rgba(74, 222, 128, 0.15); color: var(--green); }
-.status-wip      { background: rgba(251, 191, 36, 0.15);  color: var(--yellow); }
-.status-planning { background: var(--surface2); color: var(--muted); }
+.status-active   { background: rgba(21, 128, 61, 0.10);  color: var(--green); border: 1px solid rgba(21, 128, 61, 0.2); }
+.status-wip      { background: rgba(180, 83, 9, 0.10);   color: var(--yellow); border: 1px solid rgba(180, 83, 9, 0.2); }
+.status-planning { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
 
 /* ── Page hero (about / works / 3d) ── */
 .page-hero {
@@ -552,7 +552,7 @@ footer {
     top: 56px;
     left: 0;
     right: 0;
-    background: rgba(10, 10, 15, 0.97);
+    background: rgba(249, 246, 241, 0.98);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
