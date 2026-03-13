@@ -9,16 +9,17 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yuki-lm92.github.io/3d.html">
   <meta property="og:title" content="3D Gallery | Yuki">
-  <meta property="og:description" content="Blenderで作った3Dモデルをブラウザで動かすギャラリー（準備中）。">
+  <meta property="og:description" content="Blenderで作った3Dモデルのギャラリー。Three.jsでブラウザ上でインタラクティブに。">
   <meta property="og:image" content="https://yuki-lm92.github.io/og-image.svg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="3D Gallery | Yuki">
-  <meta name="twitter:description" content="Blenderで作った3Dモデルをブラウザで動かすギャラリー（準備中）。">
+  <meta name="twitter:description" content="Blenderで作った3Dモデルのギャラリー。Three.jsでブラウザ上でインタラクティブに。">
   <meta name="twitter:image" content="https://yuki-lm92.github.io/og-image.svg">
-  <meta name="description" content="Blenderで作った3Dモデルをブラウザで動かすギャラリー（準備中）。">
+  <meta name="description" content="Blenderで作った3Dモデルのギャラリー。Three.jsでブラウザ上でインタラクティブに。">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
   <style>
+    /* Three.js 背景 */
     #three-bg {
       position: fixed;
       top: 0; left: 0;
@@ -31,7 +32,8 @@
       z-index: 1;
     }
 
-    .coming-soon-hero {
+    /* ── Hero ── */
+    .gallery-hero {
       min-height: calc(100vh - 56px);
       display: flex;
       flex-direction: column;
@@ -41,7 +43,7 @@
       padding: 40px 24px;
     }
 
-    .coming-soon-hero .badge {
+    .gallery-hero .badge {
       display: inline-block;
       background: rgba(129, 140, 248, 0.15);
       border: 1px solid rgba(129, 140, 248, 0.3);
@@ -55,7 +57,7 @@
       text-transform: uppercase;
     }
 
-    .coming-soon-hero h1 {
+    .gallery-hero h1 {
       font-size: clamp(2rem, 6vw, 3.2rem);
       font-weight: 800;
       line-height: 1.2;
@@ -66,7 +68,7 @@
       background-clip: text;
     }
 
-    .coming-soon-hero p {
+    .gallery-hero p {
       color: var(--muted);
       max-width: 480px;
       font-size: 0.95rem;
@@ -74,26 +76,198 @@
       line-height: 1.8;
     }
 
-    .vision-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
-      max-width: 640px;
-      width: 100%;
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      animation: bounce 2s ease-in-out infinite;
     }
 
-    .vision-card {
-      background: rgba(19, 19, 26, 0.85);
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── コンテンツ部分（背景に半透明レイヤー） ── */
+    .gallery-body {
+      background: rgba(10, 10, 15, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+    }
+
+    .gallery-body main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+
+    /* ── ギャラリーグリッド ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .gallery-card {
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
-      text-align: left;
-      backdrop-filter: blur(8px);
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
     }
 
-    .vision-card .icon { font-size: 1.4rem; margin-bottom: 10px; }
-    .vision-card .title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-    .vision-card .desc  { font-size: 0.8rem; color: var(--muted); }
+    .gallery-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(129, 140, 248, 0.15);
+    }
+
+    /* 画像エリア（写真を差し込む場所） */
+    .gallery-thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-card:hover .gallery-thumb img {
+      transform: scale(1.05);
+    }
+
+    /* 写真未追加のプレースホルダー */
+    .gallery-thumb-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 2px dashed var(--border);
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .gallery-thumb-placeholder .placeholder-icon {
+      font-size: 2rem;
+      opacity: 0.4;
+    }
+
+    .gallery-thumb-placeholder .placeholder-note {
+      font-size: 0.7rem;
+      color: #3a3a5d;
+      font-family: 'SF Mono', 'Menlo', monospace;
+    }
+
+    .gallery-card-info {
+      padding: 16px;
+    }
+
+    .gallery-card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .gallery-card-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .gallery-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* 画像追加ガイド */
+    .add-image-guide {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+
+    .add-image-guide h3 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .add-image-guide ol {
+      font-size: 0.82rem;
+      color: var(--muted);
+      padding-left: 18px;
+      line-height: 2;
+    }
+
+    .add-image-guide code {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-size: 0.78rem;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'SF Mono', 'Menlo', monospace;
+    }
+
+    /* 制作背景テキスト */
+    .about-3d {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .about-3d strong { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .gallery-body main { padding: 48px 16px 80px; }
+    }
   </style>
 </head>
 <body>
@@ -101,41 +275,141 @@
 <canvas id="three-bg"></canvas>
 
 <div class="three-overlay">
+  <!-- ── Hero ── -->
   <nav>
     <a href="index.html" class="nav-logo">Yuki</a>
     <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false" onclick="toggleNav()">☰</button>
-  <ul class="nav-links">
+    <ul class="nav-links">
       <li><a href="about.html">About</a></li>
       <li><a href="works.html">Works</a></li>
       <li><a href="3d.html">3D</a></li>
+      <li><a href="lab.html">Lab</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <div class="coming-soon-hero">
-    <div class="badge">Coming Soon</div>
-    <h1>3D Gallery</h1>
+  <div class="gallery-hero">
+    <div class="badge">3D Gallery</div>
+    <h1>形になったもの。</h1>
     <p>
-      Blenderで作ったモデルたちをここに展示する予定です。<br>
-      Three.jsを使って、ブラウザ上でインタラクティブに動かせるギャラリーにします。
+      Blenderではじめて何かを「作った」あのとき。<br>
+      画面の中でポリゴンが立体になった瞬間の感覚を、ここに置いていきます。
     </p>
+    <div class="scroll-hint">SCROLL</div>
+  </div>
 
-    <div class="vision-cards">
-      <div class="vision-card">
-        <div class="icon">🎨</div>
-        <div class="title">Blender制作</div>
-        <div class="desc">過去に制作した3Dモデルを .glb 形式で展示予定</div>
+  <!-- ── コンテンツ ── -->
+  <div class="gallery-body">
+    <main>
+
+      <!-- 制作背景 -->
+      <section>
+        <h2 class="section-title">3Dとわたし</h2>
+        <div class="about-3d">
+          <strong>Blenderと出会ったのは、「ものの形を自分で作れるかも」という単純な好奇心でした。</strong><br><br>
+          モデリング・マテリアル・ライティング——それぞれが独立した世界で、
+          少しずつ理解が深まるたびに画面の中の景色が変わっていく感覚が好きでした。<br><br>
+          今は業務改善やツール開発が中心になっていますが、
+          「作ることそのものへの熱量」はここから来ています。
+        </div>
+      </section>
+
+      <!-- 写真追加ガイド -->
+      <div class="add-image-guide">
+        <h3>画像を追加するには</h3>
+        <ol>
+          <li>画像ファイルを <code>images/3d/</code> フォルダに置く（例: <code>model-01.jpg</code>）</li>
+          <li>各カードの <code>&lt;!-- 画像をここに --&gt;</code> コメントを外し、<code>src</code> を書き換えるだけ</li>
+          <li>Git push で即公開</li>
+        </ol>
       </div>
-      <div class="vision-card">
-        <div class="icon">🖱</div>
-        <div class="title">インタラクティブ</div>
-        <div class="desc">マウス・タッチで自由に動かせるビューワー</div>
-      </div>
-      <div class="vision-card">
-        <div class="icon">🌐</div>
-        <div class="title">Web埋め込み</div>
-        <div class="desc">Three.js / WebGL でフルブラウザ対応</div>
-      </div>
-    </div>
+
+      <!-- ギャラリー -->
+      <section>
+        <h2 class="section-title">Gallery</h2>
+        <div class="gallery-grid">
+
+          <!-- ▼ 作品カード 1 ────────────────────────── -->
+          <div class="gallery-card">
+            <div class="gallery-thumb">
+              <!-- 画像をここに
+              <img src="images/3d/model-01.jpg" alt="作品タイトル">
+              -->
+              <div class="gallery-thumb-placeholder">
+                <div class="placeholder-icon">🧊</div>
+                <div>画像準備中</div>
+                <div class="placeholder-note">images/3d/model-01.jpg</div>
+              </div>
+            </div>
+            <div class="gallery-card-info">
+              <div class="gallery-card-title">作品タイトル 01</div>
+              <div class="gallery-card-desc">説明文。制作の背景や使ったテクニックを一言で。</div>
+              <div class="gallery-card-tags">
+                <span class="card-tag">Blender</span>
+                <span class="card-tag">Cycles</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ▼ 作品カード 2 ────────────────────────── -->
+          <div class="gallery-card">
+            <div class="gallery-thumb">
+              <!-- 画像をここに
+              <img src="images/3d/model-02.jpg" alt="作品タイトル">
+              -->
+              <div class="gallery-thumb-placeholder">
+                <div class="placeholder-icon">🔮</div>
+                <div>画像準備中</div>
+                <div class="placeholder-note">images/3d/model-02.jpg</div>
+              </div>
+            </div>
+            <div class="gallery-card-info">
+              <div class="gallery-card-title">作品タイトル 02</div>
+              <div class="gallery-card-desc">説明文。制作の背景や使ったテクニックを一言で。</div>
+              <div class="gallery-card-tags">
+                <span class="card-tag">Blender</span>
+                <span class="card-tag">EEVEE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ▼ 作品カード 3 ────────────────────────── -->
+          <div class="gallery-card">
+            <div class="gallery-thumb">
+              <!-- 画像をここに
+              <img src="images/3d/model-03.jpg" alt="作品タイトル">
+              -->
+              <div class="gallery-thumb-placeholder">
+                <div class="placeholder-icon">🌀</div>
+                <div>画像準備中</div>
+                <div class="placeholder-note">images/3d/model-03.jpg</div>
+              </div>
+            </div>
+            <div class="gallery-card-info">
+              <div class="gallery-card-title">作品タイトル 03</div>
+              <div class="gallery-card-desc">説明文。制作の背景や使ったテクニックを一言で。</div>
+              <div class="gallery-card-tags">
+                <span class="card-tag">Blender</span>
+                <span class="card-tag">Geometry Nodes</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- カードをコピーして作品を追加してください -->
+
+        </div>
+      </section>
+
+      <!-- 将来構想 -->
+      <section>
+        <h2 class="section-title">Next Step</h2>
+        <div class="about-3d" style="margin-bottom:0;">
+          静止画ギャラリーの次は、<strong>.glb ファイルをブラウザ上でそのまま動かせるビューワー</strong>を実装する予定。<br>
+          Three.js の <code>GLTFLoader</code> を使い、マウス・タッチで360度回転させられる形にします。
+        </div>
+      </section>
+
+    </main>
   </div>
 </div>
 
@@ -155,7 +429,6 @@
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
   camera.position.z = 5;
 
-  // 浮遊するオブジェクト群
   const objects = [];
   const geometries = [
     new THREE.IcosahedronGeometry(0.4, 0),
@@ -183,21 +456,17 @@
     mesh.userData.speed = {
       x: (Math.random() - 0.5) * 0.003,
       y: (Math.random() - 0.5) * 0.003,
-      z: (Math.random() - 0.5) * 0.002,
     };
-    // ランダムに accent / accent2 カラー
     mesh.material.color.set(Math.random() > 0.5 ? 0x818cf8 : 0xa78bfa);
     scene.add(mesh);
     objects.push(mesh);
   }
 
-  // ライト
   scene.add(new THREE.AmbientLight(0xffffff, 0.6));
   const dirLight = new THREE.DirectionalLight(0x818cf8, 1.5);
   dirLight.position.set(3, 4, 5);
   scene.add(dirLight);
 
-  // マウス追従
   let mouse = { x: 0, y: 0 };
   window.addEventListener('mousemove', e => {
     mouse.x = (e.clientX / window.innerWidth  - 0.5) * 0.4;
@@ -215,17 +484,14 @@
   (function animate() {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
-
     objects.forEach(obj => {
       obj.rotation.x += obj.userData.speed.x;
       obj.rotation.y += obj.userData.speed.y;
       obj.position.y += Math.sin(t * 0.4 + obj.position.x) * 0.0008;
     });
-
     camera.position.x += (mouse.x - camera.position.x) * 0.03;
     camera.position.y += (-mouse.y - camera.position.y) * 0.03;
     camera.lookAt(scene.position);
-
     renderer.render(scene, camera);
   })();
 </script>
@@ -235,7 +501,6 @@
     if (a.href === location.href) a.classList.add('active');
   });
 </script>
-
 <script src="js/scroll-anim.js"></script>
 <script src="js/nav.js"></script>
 </body>
