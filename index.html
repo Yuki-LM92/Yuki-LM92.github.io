@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yuki | DX × 編集 × 広報</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Yuki</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="works.html">Works</a></li>
+    <li><a href="3d.html">3D</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="hero">
+    <div class="hero-badge">広報 × AI / DX × 個人開発</div>
+    <h1>眠っているものを<br>輝かせる人。</h1>
+    <p>「もったいない」を見つけて、編集して、動かす。<br>業務改善からツール開発まで、AIと一緒に小さな変革を続けています。</p>
+    <div class="hero-actions">
+      <a href="works.html" class="btn btn-primary">制作物を見る</a>
+      <a href="about.html" class="btn btn-secondary">自分について</a>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Pages</h2>
+    <div class="nav-grid">
+      <a href="about.html" class="nav-card">
+        <div class="nav-card-icon">👤</div>
+        <div class="nav-card-title">About</div>
+        <div class="nav-card-desc">価値観・バックグラウンド・使うツール</div>
+      </a>
+      <a href="works.html" class="nav-card">
+        <div class="nav-card-icon">🛠</div>
+        <div class="nav-card-title">Works</div>
+        <div class="nav-card-desc">Chrome拡張・自動化・Webアプリなど</div>
+      </a>
+      <a href="3d.html" class="nav-card">
+        <div class="nav-card-icon">🔮</div>
+        <div class="nav-card-title">3D</div>
+        <div class="nav-card-desc">Blenderで作ったモデルたち（準備中）</div>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">最近の制作物</h2>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">趣意書作成支援ツール</div>
+        <span class="status status-wip">試用中</span>
+      </div>
+      <div class="card-body">
+        広報マーケティング向け。人物調査→依頼理由整理→文章生成の3ステップで趣意書のたたきを自動生成するWebアプリ。
+      </div>
+      <div class="card-tags">
+        <span class="card-tag">GitHub</span>
+        <span class="card-tag">Supabase</span>
+        <span class="card-tag">Vercel</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">PR Tools Chrome拡張機能</div>
+        <span class="status status-active">稼働中</span>
+      </div>
+      <div class="card-body">
+        広報チーム向けのChrome拡張。SharePointに格納したHTMLツールをポップアップからワンクリックで起動できるランチャー。
+      </div>
+      <div class="card-tags">
+        <span class="card-tag">Chrome拡張</span>
+        <span class="card-tag">Manifest V3</span>
+        <span class="card-tag">JavaScript</span>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top: 24px;">
+      <a href="works.html" class="btn btn-secondary">すべての制作物を見る →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Yuki · <a href="https://github.com/Yuki-92LM" style="color:var(--muted); text-decoration:none;" target="_blank">GitHub</a>
+</footer>
+
+<script>
+  // 現在のページのナビリンクをアクティブに
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if (a.href === location.href) a.classList.add('active');
+  });
+</script>
+
+</body>
+</html>

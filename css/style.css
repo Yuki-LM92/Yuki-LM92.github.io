@@ -1,0 +1,330 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0a0a0f;
+  --surface:  #13131a;
+  --surface2: #1c1c28;
+  --border:   #2a2a3d;
+  --text:     #e2e2f0;
+  --muted:    #7878a0;
+  --accent:   #818cf8;
+  --accent2:  #a78bfa;
+  --green:    #4ade80;
+  --yellow:   #fbbf24;
+  --radius:   12px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── Nav ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-weight: 800;
+  font-size: 1rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text);
+}
+
+/* ── Layout ── */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+section { margin-bottom: 56px; }
+
+h2.section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Hero (home) ── */
+.hero {
+  padding: 88px 0 72px;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.78rem;
+  padding: 4px 16px;
+  border-radius: 20px;
+  margin-bottom: 28px;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 7vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #e2e2f0 0%, #818cf8 55%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 460px;
+  margin: 0 auto 36px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(129, 140, 248, 0.3);
+}
+
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Nav cards (home) ── */
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+}
+
+.nav-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(129, 140, 248, 0.12);
+}
+
+.nav-card-icon  { font-size: 1.6rem; margin-bottom: 12px; }
+.nav-card-title { font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 4px; }
+.nav-card-desc  { font-size: 0.8rem; color: var(--muted); }
+
+/* ── Cards (works) ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 14px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(129, 140, 248, 0.1);
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.card-title  { font-size: 1rem; font-weight: 700; }
+.card-body   { font-size: 0.9rem; color: var(--muted); margin-bottom: 14px; line-height: 1.7; }
+
+.card-detail {
+  font-size: 0.82rem;
+  color: #5a5a80;
+  margin: 8px 0 14px;
+  padding-left: 12px;
+  border-left: 3px solid var(--surface2);
+  line-height: 1.7;
+}
+
+.card-tags  { display: flex; flex-wrap: wrap; gap: 6px; }
+.card-tag {
+  background: var(--surface2);
+  color: var(--muted);
+  font-size: 0.72rem;
+  padding: 2px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+/* ── Status ── */
+.status {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.status-active   { background: rgba(74, 222, 128, 0.15); color: var(--green); }
+.status-wip      { background: rgba(251, 191, 36, 0.15);  color: var(--yellow); }
+.status-planning { background: var(--surface2); color: var(--muted); }
+
+/* ── Page hero (about / works / 3d) ── */
+.page-hero {
+  padding: 56px 0 40px;
+}
+
+.page-hero h1 {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  font-weight: 800;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--text) 30%, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-hero p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ── About ── */
+.philosophy-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 14px;
+}
+
+.philosophy-block .label {
+  font-size: 0.72rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.philosophy-block .quote {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.philosophy-block p {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.skills-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.skill-tag {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.82rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  nav { padding: 0 16px; }
+  .nav-links { gap: 16px; }
+  .hero { padding: 56px 0 48px; }
+  main { padding: 0 16px 64px; }
+}
