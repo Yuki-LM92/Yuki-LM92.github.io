@@ -431,17 +431,21 @@
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
   camera.position.z = 5;
 
+  // グループ全体をドラッグで回転させる
+  const group = new THREE.Group();
+  scene.add(group);
+
   const objects = [];
 
-  // 基本4種（ドーナツ・四角・ダイヤ・丸）
+  // 基本4種——細かいメッシュで立体感を出す
   const shapeFactories = [
-    () => new THREE.TorusGeometry(0.45, 0.15, 12, 32),
-    () => new THREE.BoxGeometry(0.65, 0.65, 0.65),
-    () => new THREE.OctahedronGeometry(0.52, 0),
-    () => new THREE.SphereGeometry(0.42, 14, 10),
+    () => new THREE.TorusGeometry(0.6, 0.22, 28, 56),       // ドーナツ（管を太く・セグメント多め）
+    () => new THREE.BoxGeometry(0.72, 0.72, 0.72, 6, 6, 6), // 四角（6分割でワイヤー密に）
+    () => new THREE.OctahedronGeometry(0.58, 3),             // ダイヤ（detail=3で細分化）
+    () => new THREE.SphereGeometry(0.48, 28, 20),            // 丸（高解像度）
   ];
 
-  // 4列×3行のグリッドに分散配置（ランダムな密集を避ける）
+  // 4列×3行のグリッドに分散配置
   const COLS = 4, ROWS = 3;
   let idx = 0;
   for (let row = 0; row < ROWS; row++) {
@@ -456,10 +460,9 @@
 
       const mesh = new THREE.Mesh(geo, mat);
 
-      // グリッド中心 + 小さなランダムオフセット
       const x = ((col / (COLS - 1)) - 0.5) * 20 + (Math.random() - 0.5) * 2.5;
       const y = ((row / (ROWS - 1)) - 0.5) * 13 + (Math.random() - 0.5) * 2;
-      const z = -4 - Math.random() * 5; // -4 〜 -9（カメラから十分離して重なりを減らす）
+      const z = -4 - Math.random() * 5;
 
       mesh.position.set(x, y, z);
       mesh.rotation.set(
@@ -472,7 +475,7 @@
         y: (Math.random() - 0.5) * 0.004,
       };
 
-      scene.add(mesh);
+      group.add(mesh);
       objects.push(mesh);
       idx++;
     }
@@ -483,11 +486,39 @@
   dirLight.position.set(3, 4, 5);
   scene.add(dirLight);
 
-  let mouse = { x: 0, y: 0 };
-  window.addEventListener('mousemove', e => {
-    mouse.x = (e.clientX / window.innerWidth  - 0.5) * 0.4;
-    mouse.y = (e.clientY / window.innerHeight - 0.5) * 0.4;
-  });
+  // ── ドラッグ回転（マウス・タッチ共通） ──
+  const groupTarget = { x: 0, y: 0 };
+  const groupCurrent = { x: 0, y: 0 };
+  let drag = null; // { x, y } = ドラッグ開始座標
+
+  function onPointerDown(x, y) {
+    drag = { x, y };
+  }
+  function onPointerMove(x, y) {
+    if (!drag) return;
+    const dx = x - drag.x;
+    const dy = y - drag.y;
+    groupTarget.y += dx * 0.005;
+    groupTarget.x += dy * 0.005;
+    drag = { x, y };
+  }
+  function onPointerUp() { drag = null; }
+
+  // マウス
+  canvas.addEventListener('mousedown',  e => onPointerDown(e.clientX, e.clientY));
+  window.addEventListener('mousemove',  e => onPointerMove(e.clientX, e.clientY));
+  window.addEventListener('mouseup',    () => onPointerUp());
+
+  // タッチ
+  canvas.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    onPointerDown(t.clientX, t.clientY);
+  }, { passive: true });
+  window.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    onPointerMove(t.clientX, t.clientY);
+  }, { passive: true });
+  window.addEventListener('touchend',  () => onPointerUp());
 
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -500,14 +531,20 @@
   (function animate() {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
+
+    // 各モデルの自転
     objects.forEach(obj => {
       obj.rotation.x += obj.userData.speed.x;
       obj.rotation.y += obj.userData.speed.y;
       obj.position.y += Math.sin(t * 0.4 + obj.position.x) * 0.0008;
     });
-    camera.position.x += (mouse.x - camera.position.x) * 0.03;
-    camera.position.y += (-mouse.y - camera.position.y) * 0.03;
-    camera.lookAt(scene.position);
+
+    // グループ全体をドラッグ回転（慣性つき）
+    groupCurrent.x += (groupTarget.x - groupCurrent.x) * 0.08;
+    groupCurrent.y += (groupTarget.y - groupCurrent.y) * 0.08;
+    group.rotation.x = groupCurrent.x;
+    group.rotation.y = groupCurrent.y;
+
     renderer.render(scene, camera);
   })();
 </script>
