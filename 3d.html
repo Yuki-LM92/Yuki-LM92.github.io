@@ -25,11 +25,13 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: 0;
+      pointer-events: none;
     }
 
     .three-overlay {
       position: relative;
-      z-index: 1;
+      z-index: 2;
+      isolation: isolate;
     }
 
     /* ── Hero ── */
@@ -430,36 +432,50 @@
   camera.position.z = 5;
 
   const objects = [];
-  const geometries = [
-    new THREE.IcosahedronGeometry(0.4, 0),
-    new THREE.TorusGeometry(0.3, 0.12, 8, 20),
-    new THREE.OctahedronGeometry(0.35, 0),
-    new THREE.TorusKnotGeometry(0.25, 0.08, 60, 8),
+
+  // 基本4種（ドーナツ・四角・ダイヤ・丸）
+  const shapeFactories = [
+    () => new THREE.TorusGeometry(0.45, 0.15, 12, 32),
+    () => new THREE.BoxGeometry(0.65, 0.65, 0.65),
+    () => new THREE.OctahedronGeometry(0.52, 0),
+    () => new THREE.SphereGeometry(0.42, 14, 10),
   ];
 
-  const material = new THREE.MeshStandardMaterial({
-    color: 0x818cf8,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.5,
-  });
+  // 4列×3行のグリッドに分散配置（ランダムな密集を避ける）
+  const COLS = 4, ROWS = 3;
+  let idx = 0;
+  for (let row = 0; row < ROWS; row++) {
+    for (let col = 0; col < COLS; col++) {
+      const geo = shapeFactories[idx % shapeFactories.length]();
+      const mat = new THREE.MeshStandardMaterial({
+        wireframe: true,
+        transparent: true,
+        opacity: 0.42,
+        color: idx % 2 === 0 ? 0x0D9488 : 0x2DD4BF,
+      });
 
-  for (let i = 0; i < 18; i++) {
-    const geo = geometries[i % geometries.length];
-    const mesh = new THREE.Mesh(geo, material.clone());
-    mesh.position.set(
-      (Math.random() - 0.5) * 14,
-      (Math.random() - 0.5) * 10,
-      (Math.random() - 0.5) * 6 - 2
-    );
-    mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
-    mesh.userData.speed = {
-      x: (Math.random() - 0.5) * 0.003,
-      y: (Math.random() - 0.5) * 0.003,
-    };
-    mesh.material.color.set(Math.random() > 0.5 ? 0x0D9488 : 0x2DD4BF);
-    scene.add(mesh);
-    objects.push(mesh);
+      const mesh = new THREE.Mesh(geo, mat);
+
+      // グリッド中心 + 小さなランダムオフセット
+      const x = ((col / (COLS - 1)) - 0.5) * 20 + (Math.random() - 0.5) * 2.5;
+      const y = ((row / (ROWS - 1)) - 0.5) * 13 + (Math.random() - 0.5) * 2;
+      const z = -4 - Math.random() * 5; // -4 〜 -9（カメラから十分離して重なりを減らす）
+
+      mesh.position.set(x, y, z);
+      mesh.rotation.set(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
+      );
+      mesh.userData.speed = {
+        x: (Math.random() - 0.5) * 0.004,
+        y: (Math.random() - 0.5) * 0.004,
+      };
+
+      scene.add(mesh);
+      objects.push(mesh);
+      idx++;
+    }
   }
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.6));
