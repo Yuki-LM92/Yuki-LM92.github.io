@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yuki | あなたのもったいなさは？</title>
+
+  <!-- OGP / SNS共有 -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yuki-lm92.github.io/">
+  <meta property="og:title" content="Yuki | あなたのもったいなさは？">
+  <meta property="og:description" content="本質はもうそこにある。もったいないを一緒に探す人。">
+  <meta property="og:image" content="https://yuki-lm92.github.io/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Yuki | あなたのもったいなさは？">
+  <meta name="twitter:description" content="本質はもうそこにある。もったいないを一緒に探す人。">
+  <meta name="twitter:image" content="https://yuki-lm92.github.io/og-image.svg">
+  <meta name="description" content="本質はもうそこにある。もったいないを一緒に探す人。">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Yuki</a>
+  <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false" onclick="toggleNav()">☰</button>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="works.html">Works</a></li>
+    <li><a href="3d.html">3D</a></li>
+    <li><a href="lab.html">Lab</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="hero">
+    <h1>あなたの<span class="hl">もったいなさ</span>は？</h1>
+    <p>本質はもうそこにある。<br>
+    ただ、気づかれていないだけで。<br>
+    もったいないって、自分ではなかなか見えないものです。<br>
+    だから、話を聞かせてほしいと思っています。</p>
+    <div class="hero-actions">
+      <a href="contact.html" class="btn btn-primary">話しませんか</a>
+      <a href="works.html" class="btn btn-secondary">つくってきたものを見る</a>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">もったいないは、どこにでもある</h2>
+    <div class="nav-grid">
+      <div class="nav-card" style="cursor:default;">
+        <div class="nav-card-title">毎日忙しいのに、<br>何かが足りない気がしている</div>
+        <div class="nav-card-desc">やることはある。でも、自分が何をしたいのかがだんだんわからなくなってきた</div>
+      </div>
+      <div class="nav-card" style="cursor:default;">
+        <div class="nav-card-title">もっとできるはずなのに、<br>考える時間がない</div>
+        <div class="nav-card-desc">追われている。本当は向き合いたいことがあるのに、日々に消えていく</div>
+      </div>
+      <div class="nav-card" style="cursor:default;">
+        <div class="nav-card-title">変えたいものがある。<br>でも、どこから？</div>
+        <div class="nav-card-desc">違和感はある。動き出せていない。そのまま時間だけが過ぎている</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">やっていること</h2>
+
+    <div class="card">
+      <div class="card-body" style="margin-bottom:0;">
+        まず、話を聞きます。<br><br>
+        もったいないって、自分一人では気づきにくいものです。
+        誰かが「それ、もったいないですね」と言ってくれるだけで、見えてくることがある。<br><br>
+        余白ができると、人は考えられるようになります。
+        考えられるようになると、その人らしくなります。
+        その余白をつくるために、ツールを作ったり、繰り返し作業を仕組みに変えたり、ということをしています。<br><br>
+        <span style="color:var(--muted);">NPO・小規模チーム・個人事業主、まずは雑談からでも。</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <a href="works.html" class="btn btn-secondary">つくってきたものを見る →</a>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">最近の動き</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-date">2026.03</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">NPO DX支援（案件0号）準備開始</div>
+          <div class="timeline-desc">地域おこし協力隊の仲間が所属するNPOの業務改善支援。初のフリーランス案件としてヒアリング準備中。</div>
+          <span class="timeline-tag status-planning">準備中</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2026.03</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">AI Daily Digest 自動配信 構築</div>
+          <div class="timeline-desc">毎朝AIニュースをRSSで収集・Discord自動送信。重複排除機能付き。翻訳精度を継続改善中。</div>
+          <span class="timeline-tag status-wip">調整中</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2026.02</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">DXインフォ 自動配信システム 稼働</div>
+          <div class="timeline-desc">Claude APIでDXコラムを毎日自動生成・保存。テーマ重複チェック・週別フォルダ整理まで全自動。</div>
+          <span class="timeline-tag status-active">稼働中</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2026.02</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">プロジェクト管理ツール 試作</div>
+          <div class="timeline-desc">ボードビュー＋ガントチャートを単体HTMLで実現。サーバー不要・JSONエクスポート対応。</div>
+          <span class="timeline-tag status-wip">試用中</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2026.01</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">PR Tools Chrome拡張 リリース</div>
+          <div class="timeline-desc">社内HTMLツールをポップアップからワンクリック起動するChrome拡張ランチャー。チームに配布済み。</div>
+          <span class="timeline-tag status-active">稼働中</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2026.01</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">SNS分析ダッシュボード 完成</div>
+          <div class="timeline-desc">Instagram・X・Facebook のCSVをドラッグ&ドロップするだけでグラフ＆KPI自動生成。</div>
+          <span class="timeline-tag status-active">稼働中</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2025.12</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">趣意書作成支援ツール 開発</div>
+          <div class="timeline-desc">登壇・取材依頼の趣意書たたき台を自動生成するWebアプリ。GitHub / Supabase / Vercel 構成。</div>
+          <span class="timeline-tag status-wip">試用中</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Yuki · <a href="https://github.com/Yuki-LM92" style="color:var(--muted); text-decoration:none;" target="_blank">GitHub</a>
+</footer>
+
+<script>
+  // 現在のページのナビリンクをアクティブに
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if (a.href === location.href) a.classList.add('active');
+  });
+</script>
+
+<script src="js/scroll-anim.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>
