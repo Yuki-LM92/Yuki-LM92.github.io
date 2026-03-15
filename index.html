@@ -3,653 +3,650 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111009">
-  <title>山本勇気 — Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+JP:wght@300;400;700&family=Shippori+Mincho+B1:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#F9F6F1">
+  <title>Yuki | あなたのもったいなさは？</title>
+
+  <!-- OGP / SNS共有 -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yuki-lm92.github.io/">
+  <meta property="og:title" content="Yuki | あなたのもったいなさは？">
+  <meta property="og:description" content="本質はもうそこにある。もったいないを一緒に探す人。">
+  <meta property="og:image" content="https://yuki-lm92.github.io/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Yuki | あなたのもったいなさは？">
+  <meta name="twitter:description" content="本質はもうそこにある。もったいないを一緒に探す人。">
+  <meta name="twitter:image" content="https://yuki-lm92.github.io/og-image.svg">
+  <meta name="description" content="本質はもうそこにある。もったいないを一緒に探す人。">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:           #111009;
-      --surface:      #1c1a15;
-      --text:         #ede8df;
-      --muted:        #7a7568;
-      --accent:       #d94e1f;
-      --accent-glow:  rgba(217, 78, 31, 0.12);
-      --border:       #2a2720;
-      --line:         rgba(237, 232, 223, 0.1);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 300;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* Grain */
-    body::after {
-      content: '';
+    /* ── Three.js 背景 ── */
+    #three-bg {
       position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.028;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
       pointer-events: none;
-      z-index: 9999;
     }
 
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .three-overlay {
+      position: relative;
+      z-index: 2;
+      isolation: isolate;
     }
+
+    /* ── Hero (フルビューポート) ── */
+    .hero-full {
+      min-height: calc(100vh - 56px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 64px 0 80px;
+      position: relative;
+    }
+
+    /* ── マーキー ── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+      margin: 48px 0;
+      background: rgba(249, 246, 241, 0.7);
+      backdrop-filter: blur(6px);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .marquee-track { animation: marquee 28s linear infinite; }
+    }
+
     @keyframes marquee {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
 
-    .r  { opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards; }
-    .r1 { animation-delay: 0.05s; }
-    .r2 { animation-delay: 0.2s; }
-    .r3 { animation-delay: 0.35s; }
-    .r4 { animation-delay: 0.5s; }
-    .r5 { animation-delay: 0.65s; }
-
-    /* ── Nav ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 22px 48px;
-      display: flex;
-      justify-content: space-between;
+    .marquee-item {
+      display: inline-flex;
       align-items: center;
-      transition: background 0.4s, border-color 0.4s;
-      border-bottom: 1px solid transparent;
-    }
-    nav.scrolled {
-      background: rgba(17, 16, 9, 0.9);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-color: var(--line);
-    }
-    .nav-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.05rem;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: 0.03em;
-    }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a {
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      gap: 20px;
+      padding: 0 32px;
+      font-size: 0.72rem;
+      font-weight: 600;
       color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 48px 88px;
-      position: relative;
-      border-bottom: 1px solid var(--line);
-    }
-    .hero-year {
-      position: absolute;
-      top: 120px; right: 48px;
-      font-family: 'DM Serif Display', serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.14em;
-      color: var(--muted);
-      writing-mode: vertical-rl;
-    }
-    .hero-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 36px;
-    }
-    .hero-headline {
-      font-family: 'Shippori Mincho B1', serif;
-      font-weight: 800;
-      font-size: clamp(54px, 10.5vw, 130px);
-      line-height: 1.08;
-      letter-spacing: -0.01em;
-    }
-    .hero-headline .accent { color: var(--accent); }
-    .hero-headline-en {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: clamp(42px, 8.5vw, 108px);
-      line-height: 1.1;
-      color: var(--text);
-      opacity: 0.8;
-    }
-    .hero-body {
-      margin-top: 44px;
-      max-width: 460px;
-    }
-    .hero-body p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 2;
-    }
-    .hero-body p + p { margin-top: 0.6em; }
-    .hero-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 32px;
-    }
-    .hero-tag {
-      font-size: 0.68rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 5px 14px;
-      border-radius: 2px;
-    }
-
-    /* ── Ticker ── */
-    .ticker {
-      overflow: hidden;
-      background: var(--surface);
-      border-bottom: 1px solid var(--line);
-      padding: 13px 0;
-    }
-    .ticker-track {
-      display: flex;
-      width: max-content;
-      animation: marquee 24s linear infinite;
-    }
-    .ticker-item {
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 0 36px;
       white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 36px;
-    }
-    .ticker-item::after {
-      content: '◆';
-      font-size: 0.38rem;
-      color: var(--accent);
     }
 
-    /* ── Section common ── */
-    section {
-      padding: 88px 48px;
-      border-bottom: 1px solid var(--line);
-    }
-    .section-eyebrow {
-      font-size: 0.66rem;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 56px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .section-eyebrow::after {
+    .marquee-item::after {
       content: '';
-      display: block;
-      height: 1px;
-      width: 36px;
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
       background: var(--accent);
       opacity: 0.5;
     }
 
-    /* ── Works ── */
-    .works-list { list-style: none; }
-
-    .work-item {
-      border-top: 1px solid var(--line);
-      position: relative;
-      overflow: hidden;
-    }
-    .work-item:last-child { border-bottom: 1px solid var(--line); }
-
-    /* flood fill on hover */
-    .work-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--accent-glow);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .work-item:hover::before { transform: scaleX(1); }
-
-    .work-inner {
-      position: relative;
-      z-index: 1;
+    /* ── ワークスペース セクション ── */
+    .workspace-grid {
       display: grid;
-      grid-template-columns: 3.2rem 1fr auto;
-      align-items: start;
-      gap: 20px;
-      padding: 30px 0;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
     }
 
-    .work-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 0.78rem;
-      color: var(--muted);
-      padding-top: 4px;
-      letter-spacing: 0.04em;
+    .workspace-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-decoration: none;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 1px 4px rgba(28, 24, 20, 0.04);
     }
 
-    .work-main { display: flex; flex-direction: column; gap: 0; }
+    .workspace-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(13, 148, 136, 0.1);
+    }
 
-    .work-title {
-      font-family: 'Shippori Mincho B1', serif;
-      font-weight: 600;
-      font-size: clamp(1rem, 2.4vw, 1.35rem);
+    .workspace-card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .workspace-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .workspace-card-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .workspace-card-title {
+      font-family: var(--serif);
+      font-size: 0.92rem;
+      font-weight: 700;
       color: var(--text);
-      line-height: 1.3;
+      line-height: 1.4;
     }
 
-    .work-desc {
-      font-size: 0.82rem;
+    .workspace-card-desc {
+      font-size: 0.8rem;
       color: var(--muted);
-      line-height: 1.8;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition:
-        max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity    0.3s  ease,
-        margin-top 0.3s  ease;
-    }
-    .work-item:hover .work-desc {
-      max-height: 100px;
-      opacity: 1;
-      margin-top: 10px;
+      line-height: 1.6;
     }
 
-    .work-tech {
+    .workspace-card-footer {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition:
-        max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.05s,
-        opacity    0.3s  ease 0.05s,
-        margin-top 0.3s  ease 0.05s;
-    }
-    .work-item:hover .work-tech {
-      max-height: 40px;
-      opacity: 1;
-      margin-top: 10px;
-    }
-    .work-tech-tag {
-      font-size: 0.62rem;
-      letter-spacing: 0.07em;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 2px 8px;
-      border-radius: 2px;
+      margin-top: auto;
     }
 
-    .work-meta {
+    /* ── フィロソフィー引用 ── */
+    .philosophy-pull {
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      background: var(--surface);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 14px;
+    }
+
+    .philosophy-pull .label {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .philosophy-pull .quote {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .philosophy-pull p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ── スクロールヒント ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
-      padding-top: 4px;
-    }
-    .work-status {
-      font-size: 0.62rem;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 4px 11px;
-      border-radius: 2px;
-      white-space: nowrap;
-    }
-    .s-active   { background: rgba(34,197,94,0.1);   color: #4ade80; }
-    .s-wip      { background: rgba(234,179,8,0.1);   color: #facc15; }
-    .s-planning { background: rgba(148,163,184,0.08); color: #94a3b8; }
-
-    /* ── Philosophy ── */
-    .pull-quote {
-      font-family: 'Shippori Mincho B1', serif;
-      font-weight: 800;
-      font-size: clamp(30px, 5.5vw, 62px);
-      line-height: 1.55;
-      max-width: 840px;
-    }
-    .pull-quote .accent { color: var(--accent); }
-
-    .philosophy-body {
-      margin-top: 48px;
-      max-width: 500px;
-    }
-    .philosophy-body p {
-      font-size: 0.87rem;
-      color: var(--muted);
-      line-height: 2.1;
-    }
-    .philosophy-body p + p { margin-top: 1em; }
-
-    /* ── Contact ── */
-    .contact-title {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: clamp(36px, 6.5vw, 80px);
-      line-height: 1.2;
-      margin-bottom: 36px;
-    }
-    .contact-body {
-      max-width: 460px;
-    }
-    .contact-body p {
-      font-size: 0.87rem;
-      color: var(--muted);
-      line-height: 2.1;
     }
 
-    /* ── Footer ── */
-    footer {
-      padding: 32px 48px;
+    .scroll-hint::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .scroll-hint { animation: scrollbounce 2.4s ease-in-out infinite; }
+    }
+
+    @keyframes scrollbounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── ヒーロー装飾 ── */
+    .hero-eyebrow-line {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      border-top: 1px solid var(--line);
+      gap: 12px;
+      margin-bottom: 32px;
     }
-    .footer-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 0.88rem;
-      color: var(--muted);
+
+    .hero-eyebrow-line::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
     }
-    .footer-date {
-      font-size: 0.68rem;
+
+    .hero-eyebrow-text {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 700;
       letter-spacing: 0.1em;
-      color: var(--muted);
-      opacity: 0.55;
+      text-transform: uppercase;
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 680px) {
-      nav { padding: 18px 20px; }
-      .nav-links { display: none; }
-      .hero { padding: 0 20px 64px; }
-      .hero-year { display: none; }
-      section { padding: 60px 20px; }
-      .work-inner { grid-template-columns: 2.4rem 1fr; }
-      .work-meta { display: none; }
-      footer { padding: 24px 20px; }
+    /* ── コンテンツ背景 ── */
+    .content-layer {
+      background: rgba(249, 246, 241, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
     }
 
-    /* ── Reduced motion ── */
-    @media (prefers-reduced-motion: reduce) {
-      .r { animation: none; opacity: 1; }
-      .ticker-track { animation: none; }
-      .work-item::before,
-      .work-desc,
-      .work-tech { transition: none; }
+    @media (max-width: 600px) {
+      .hero-full { padding: 48px 0 64px; }
+      .workspace-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav" aria-label="メインナビゲーション">
-  <a href="#top" class="nav-logo">山本 勇気</a>
-  <ul class="nav-links">
-    <li><a href="#works">Works</a></li>
-    <li><a href="#philosophy">Philosophy</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+<canvas id="three-bg" aria-hidden="true"></canvas>
 
-<!-- HERO -->
-<section class="hero" id="top" aria-labelledby="hero-heading">
-  <span class="hero-year" aria-hidden="true">2026</span>
+<div class="three-overlay">
 
-  <p class="hero-eyebrow r r1">Yuki Yamamoto &nbsp;·&nbsp; DX / AI &nbsp;·&nbsp; Portfolio</p>
+  <!-- ── Nav ── -->
+  <nav>
+    <a href="index.html" class="nav-logo">Yuki</a>
+    <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false" onclick="toggleNav()">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="works.html">Works</a></li>
+      <li><a href="3d.html">3D</a></li>
+      <li><a href="lab.html">Lab</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
 
-  <h1 id="hero-heading">
-    <div class="hero-headline r r2">
-      <span class="accent">「もったいない」</span>を、
+  <!-- ── Hero ── -->
+  <main id="main-content">
+    <div class="hero hero-full">
+      <div class="hero-eyebrow-line">
+        <span class="hero-eyebrow-text">もったいないを、一緒に探す</span>
+      </div>
+      <h1>あなたの<span class="hl">もったいなさ</span>は？</h1>
+      <p>本質はもうそこにある。<br>
+      ただ、気づかれていないだけで。<br>
+      もったいないって、自分ではなかなか見えないものです。<br>
+      だから、話を聞かせてほしいと思っています。</p>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-primary">話しませんか</a>
+        <a href="works.html" class="btn btn-secondary">つくってきたものを見る</a>
+      </div>
+      <div class="scroll-hint" aria-hidden="true">Scroll</div>
     </div>
-    <div class="hero-headline-en r r3">make it shine.</div>
-  </h1>
+  </main>
 
-  <div class="hero-body r r4">
-    <p>AIとDXの力で、眠っている価値・作業・時間を引き出す。</p>
-    <p>会社員（広報/PR・DX推進）として、副業DX支援として、横断して動いています。</p>
+  <!-- ── コンテンツ本体 ── -->
+  <div class="content-layer">
+    <div style="max-width:800px; margin:0 auto; padding:64px 24px 96px;">
+
+      <!-- マーキー -->
+      <div class="marquee-wrap" aria-hidden="true">
+        <div class="marquee-track">
+          <span class="marquee-item">Claude Code</span>
+          <span class="marquee-item">Python</span>
+          <span class="marquee-item">業務自動化</span>
+          <span class="marquee-item">Three.js</span>
+          <span class="marquee-item">Chrome拡張</span>
+          <span class="marquee-item">Blender</span>
+          <span class="marquee-item">Supabase</span>
+          <span class="marquee-item">Vercel</span>
+          <span class="marquee-item">AI活用</span>
+          <span class="marquee-item">もったいない</span>
+          <span class="marquee-item">余白をつくる</span>
+          <span class="marquee-item">GitHub</span>
+          <span class="marquee-item">Claude Code</span>
+          <span class="marquee-item">Python</span>
+          <span class="marquee-item">業務自動化</span>
+          <span class="marquee-item">Three.js</span>
+          <span class="marquee-item">Chrome拡張</span>
+          <span class="marquee-item">Blender</span>
+          <span class="marquee-item">Supabase</span>
+          <span class="marquee-item">Vercel</span>
+          <span class="marquee-item">AI活用</span>
+          <span class="marquee-item">もったいない</span>
+          <span class="marquee-item">余白をつくる</span>
+          <span class="marquee-item">GitHub</span>
+        </div>
+      </div>
+
+      <!-- もったいないはどこにでもある -->
+      <section class="fade-in">
+        <h2 class="section-title">もったいないは、どこにでもある</h2>
+        <div class="nav-grid">
+          <div class="nav-card" style="cursor:default;">
+            <div class="nav-card-title">毎日忙しいのに、<br>何かが足りない気がしている</div>
+            <div class="nav-card-desc">やることはある。でも、自分が何をしたいのかがだんだんわからなくなってきた</div>
+          </div>
+          <div class="nav-card" style="cursor:default;">
+            <div class="nav-card-title">もっとできるはずなのに、<br>考える時間がない</div>
+            <div class="nav-card-desc">追われている。本当は向き合いたいことがあるのに、日々に消えていく</div>
+          </div>
+          <div class="nav-card" style="cursor:default;">
+            <div class="nav-card-title">変えたいものがある。<br>でも、どこから？</div>
+            <div class="nav-card-desc">違和感はある。動き出せていない。そのまま時間だけが過ぎている</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- やっていること -->
+      <section class="fade-in">
+        <h2 class="section-title">やっていること</h2>
+
+        <div class="philosophy-pull">
+          <div class="label">おせっかい</div>
+          <div class="quote">まず、話を聞きます。</div>
+          <p>もったいないって、自分一人では気づきにくいものです。
+          誰かが「それ、もったいないですね」と言ってくれるだけで、見えてくることがある。</p>
+        </div>
+
+        <div class="philosophy-pull">
+          <div class="label">余白</div>
+          <div class="quote">余白ができると、人は考えられるようになります。</div>
+          <p>考えられるようになると、その人らしくなります。
+          その余白をつくるために、ツールを作ったり、繰り返し作業を仕組みに変えたりしています。</p>
+        </div>
+
+        <p style="font-size:0.82rem; color:var(--muted); margin-top:16px;">
+          NPO・小規模チーム・個人事業主、まずは雑談からでも。
+        </p>
+
+        <div style="margin-top: 20px;">
+          <a href="works.html" class="btn btn-secondary">つくってきたものを見る →</a>
+        </div>
+      </section>
+
+      <!-- ワークスペース -->
+      <section class="fade-in">
+        <h2 class="section-title">ワークスペース</h2>
+        <p style="font-size:0.875rem; color:var(--muted); margin-bottom:24px; line-height:1.8;">
+          手を動かしながら考えるのが性に合っています。ここは、つくりながら学んでいる場所です。
+        </p>
+        <div class="workspace-grid">
+
+          <a href="works.html" class="workspace-card">
+            <div class="workspace-card-header">
+              <span class="workspace-card-label">Works</span>
+              <span class="status status-active">稼働中</span>
+            </div>
+            <div class="workspace-card-title">つくってきたもの</div>
+            <div class="workspace-card-desc">業務自動化・ツール開発・Chrome拡張。ここまでの成果物一覧。</div>
+            <div class="workspace-card-footer">
+              <span class="card-tag">Python</span>
+              <span class="card-tag">HTML</span>
+              <span class="card-tag">API</span>
+            </div>
+          </a>
+
+          <a href="3d.html" class="workspace-card">
+            <div class="workspace-card-header">
+              <span class="workspace-card-label">3D</span>
+              <span class="status status-wip">制作中</span>
+            </div>
+            <div class="workspace-card-title">形になったもの</div>
+            <div class="workspace-card-desc">Blenderで作った3Dモデル。Three.jsでブラウザ上でインタラクティブに。</div>
+            <div class="workspace-card-footer">
+              <span class="card-tag">Blender</span>
+              <span class="card-tag">Three.js</span>
+            </div>
+          </a>
+
+          <a href="lab.html" class="workspace-card">
+            <div class="workspace-card-header">
+              <span class="workspace-card-label">Lab</span>
+              <span class="status status-planning">実験中</span>
+            </div>
+            <div class="workspace-card-title">実験と試作</div>
+            <div class="workspace-card-desc">動くかどうかわからないものを試す場所。失敗も記録しておく。</div>
+            <div class="workspace-card-footer">
+              <span class="card-tag">Claude API</span>
+              <span class="card-tag">実験</span>
+            </div>
+          </a>
+
+          <a href="about.html" class="workspace-card">
+            <div class="workspace-card-header">
+              <span class="workspace-card-label">About</span>
+            </div>
+            <div class="workspace-card-title">どういう人間か</div>
+            <div class="workspace-card-desc">おせっかいが我慢できない。もったいないがとことん気になる。</div>
+            <div class="workspace-card-footer">
+              <span class="card-tag">もったいない</span>
+              <span class="card-tag">余白</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- タイムライン -->
+      <section class="fade-in">
+        <h2 class="section-title">最近の動き</h2>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-date">2026.03</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-title">NPO DX支援（案件0号）準備開始</div>
+              <div class="timeline-desc">地域おこし協力隊の仲間が所属するNPOの業務改善支援。初のフリーランス案件としてヒアリング準備中。</div>
+              <span class="timeline-tag status-planning">準備中</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2026.03</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-title">AI Daily Digest 自動配信 構築</div>
+              <div class="timeline-desc">毎朝AIニュースをRSSで収集・Discord自動送信。重複排除機能付き。翻訳精度を継続改善中。</div>
+              <span class="timeline-tag status-wip">調整中</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2026.02</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-title">DXインフォ 自動配信システム 稼働</div>
+              <div class="timeline-desc">Claude APIでDXコラムを毎日自動生成・保存。テーマ重複チェック・週別フォルダ整理まで全自動。</div>
+              <span class="timeline-tag status-active">稼働中</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2026.02</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-title">プロジェクト管理ツール 試作</div>
+              <div class="timeline-desc">ボードビュー＋ガントチャートを単体HTMLで実現。サーバー不要・JSONエクスポート対応。</div>
+              <span class="timeline-tag status-wip">試用中</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2026.01</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-title">PR Tools Chrome拡張 リリース</div>
+              <div class="timeline-desc">社内HTMLツールをポップアップからワンクリック起動するChrome拡張ランチャー。チームに配布済み。</div>
+              <span class="timeline-tag status-active">稼働中</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2026.01</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-title">SNS分析ダッシュボード 完成</div>
+              <div class="timeline-desc">Instagram・X・Facebook のCSVをドラッグ&ドロップするだけでグラフ＆KPI自動生成。</div>
+              <span class="timeline-tag status-active">稼働中</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2025.12</div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-title">趣意書作成支援ツール 開発</div>
+              <div class="timeline-desc">登壇・取材依頼の趣意書たたき台を自動生成するWebアプリ。GitHub / Supabase / Vercel 構成。</div>
+              <span class="timeline-tag status-wip">試用中</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
   </div>
 
-  <div class="hero-tags r r5" role="list" aria-label="スキルタグ">
-    <span class="hero-tag" role="listitem">AI活用</span>
-    <span class="hero-tag" role="listitem">業務自動化</span>
-    <span class="hero-tag" role="listitem">Claude Code</span>
-    <span class="hero-tag" role="listitem">Chrome拡張</span>
-    <span class="hero-tag" role="listitem">Python</span>
-    <span class="hero-tag" role="listitem">組織設計</span>
-  </div>
-</section>
+  <footer>
+    © 2026 Yuki · <a href="https://github.com/Yuki-LM92" style="color:var(--muted); text-decoration:none;" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </footer>
 
-<!-- TICKER -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span class="ticker-item">AI活用</span>
-    <span class="ticker-item">業務自動化</span>
-    <span class="ticker-item">Claude Code</span>
-    <span class="ticker-item">Python</span>
-    <span class="ticker-item">組織設計</span>
-    <span class="ticker-item">DX推進</span>
-    <span class="ticker-item">SNS運用</span>
-    <span class="ticker-item">Chrome拡張</span>
-    <span class="ticker-item">副業DX支援</span>
-    <!-- duplicate for seamless loop -->
-    <span class="ticker-item">AI活用</span>
-    <span class="ticker-item">業務自動化</span>
-    <span class="ticker-item">Claude Code</span>
-    <span class="ticker-item">Python</span>
-    <span class="ticker-item">組織設計</span>
-    <span class="ticker-item">DX推進</span>
-    <span class="ticker-item">SNS運用</span>
-    <span class="ticker-item">Chrome拡張</span>
-    <span class="ticker-item">副業DX支援</span>
-  </div>
-</div>
+</div><!-- /three-overlay -->
 
-<!-- WORKS -->
-<section id="works" aria-labelledby="works-heading">
-  <p class="section-eyebrow" id="works-heading">Works</p>
-  <ul class="works-list">
-
-    <li class="work-item">
-      <div class="work-inner">
-        <span class="work-num" aria-hidden="true">01</span>
-        <div class="work-main">
-          <h3 class="work-title">PR Tools Chrome拡張機能</h3>
-          <p class="work-desc">広報チーム向けChrome拡張。SharePointのHTMLツールをポップアップからワンクリックで起動。ツール更新時の再配布が不要になる仕組みを構築。</p>
-          <div class="work-tech" aria-label="使用技術">
-            <span class="work-tech-tag">Chrome拡張</span>
-            <span class="work-tech-tag">Manifest V3</span>
-            <span class="work-tech-tag">SharePoint API</span>
-            <span class="work-tech-tag">JavaScript</span>
-          </div>
-        </div>
-        <div class="work-meta">
-          <span class="work-status s-active">稼働中</span>
-        </div>
-      </div>
-    </li>
-
-    <li class="work-item">
-      <div class="work-inner">
-        <span class="work-num" aria-hidden="true">02</span>
-        <div class="work-main">
-          <h3 class="work-title">SNS分析ダッシュボード</h3>
-          <p class="work-desc">Instagram・X・FacebookのCSVをブラウザ上で可視化。サーバー不要で単体HTML動作。CSVドラッグ＆ドロップでグラフとKPIを即時生成。</p>
-          <div class="work-tech" aria-label="使用技術">
-            <span class="work-tech-tag">Chart.js</span>
-            <span class="work-tech-tag">FileReader API</span>
-            <span class="work-tech-tag">CSV処理</span>
-          </div>
-        </div>
-        <div class="work-meta">
-          <span class="work-status s-active">稼働中</span>
-        </div>
-      </div>
-    </li>
-
-    <li class="work-item">
-      <div class="work-inner">
-        <span class="work-num" aria-hidden="true">03</span>
-        <div class="work-main">
-          <h3 class="work-title">プロジェクト管理ツール</h3>
-          <p class="work-desc">広報チーム（10〜15名）向け。ボードビュー＋SVGガントを1つのHTMLで提供。Teamsチャットに分散していた全体像を可視化。</p>
-          <div class="work-tech" aria-label="使用技術">
-            <span class="work-tech-tag">SVGガント</span>
-            <span class="work-tech-tag">localStorage</span>
-            <span class="work-tech-tag">HTML/CSS/JS</span>
-          </div>
-        </div>
-        <div class="work-meta">
-          <span class="work-status s-wip">試用中</span>
-        </div>
-      </div>
-    </li>
-
-    <li class="work-item">
-      <div class="work-inner">
-        <span class="work-num" aria-hidden="true">04</span>
-        <div class="work-main">
-          <h3 class="work-title">趣意書作成支援ツール</h3>
-          <p class="work-desc">Perplexity APIで人物調査 → Claude APIで依頼理由整理・文章生成の3ステップ。Supabase × Vercel × GitHubのクラウド構成で稼働。</p>
-          <div class="work-tech" aria-label="使用技術">
-            <span class="work-tech-tag">Claude API</span>
-            <span class="work-tech-tag">Perplexity API</span>
-            <span class="work-tech-tag">Supabase</span>
-            <span class="work-tech-tag">Vercel</span>
-          </div>
-        </div>
-        <div class="work-meta">
-          <span class="work-status s-wip">試用中</span>
-        </div>
-      </div>
-    </li>
-
-    <li class="work-item">
-      <div class="work-inner">
-        <span class="work-num" aria-hidden="true">05</span>
-        <div class="work-main">
-          <h3 class="work-title">DXインフォ 自動配信システム</h3>
-          <p class="work-desc">Gemini APIで毎朝DX小ネタを自動生成・Google Driveに保存。cronで7:10に動作。テーマ重複チェック・週別整理まで自動化。</p>
-          <div class="work-tech" aria-label="使用技術">
-            <span class="work-tech-tag">Python</span>
-            <span class="work-tech-tag">Gemini API</span>
-            <span class="work-tech-tag">cron</span>
-            <span class="work-tech-tag">Google Drive</span>
-          </div>
-        </div>
-        <div class="work-meta">
-          <span class="work-status s-active">稼働中</span>
-        </div>
-      </div>
-    </li>
-
-    <li class="work-item">
-      <div class="work-inner">
-        <span class="work-num" aria-hidden="true">06</span>
-        <div class="work-main">
-          <h3 class="work-title">AI Daily Digest</h3>
-          <p class="work-desc">RSSでAIニュース収集・Gemini APIで日本語要約・毎朝Discordに自動配信。重複排除機能付き。翻訳精度の継続改善中。</p>
-          <div class="work-tech" aria-label="使用技術">
-            <span class="work-tech-tag">Python</span>
-            <span class="work-tech-tag">Gemini API</span>
-            <span class="work-tech-tag">Discord Webhook</span>
-            <span class="work-tech-tag">RSS</span>
-          </div>
-        </div>
-        <div class="work-meta">
-          <span class="work-status s-wip">調整中</span>
-        </div>
-      </div>
-    </li>
-
-    <li class="work-item">
-      <div class="work-inner">
-        <span class="work-num" aria-hidden="true">07</span>
-        <div class="work-main">
-          <h3 class="work-title">NPO DX支援（案件0号）</h3>
-          <p class="work-desc">地域おこし協力隊の仲間が所属するNPOの業務効率化。ヒアリングから実装・納品まで、フリーランス初案件として通しで担当。</p>
-          <div class="work-tech" aria-label="使用技術">
-            <span class="work-tech-tag">組織設計</span>
-            <span class="work-tech-tag">DX支援</span>
-            <span class="work-tech-tag">伴走型</span>
-          </div>
-        </div>
-        <div class="work-meta">
-          <span class="work-status s-planning">準備中</span>
-        </div>
-      </div>
-    </li>
-
-  </ul>
-</section>
-
-<!-- PHILOSOPHY -->
-<section id="philosophy" aria-labelledby="philosophy-heading">
-  <p class="section-eyebrow" id="philosophy-heading">Philosophy</p>
-  <blockquote class="pull-quote">
-    本質はそこにある。<br>
-    ただ、生き生きして<br>
-    いないだけ。<br>
-    <span class="accent">それが「もったいない」。</span>
-  </blockquote>
-  <div class="philosophy-body">
-    <p>業務改善でもDXでも、最初に探すのはツールではありません。「誰の、どの時間がもったいないか」を先に考えます。</p>
-    <p>問いを立て、仮説を編集して、AIや自動化で形にする。ヒアリングから納品まで伴走できる、「価値観のあるDX屋」を目指しています。</p>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" aria-labelledby="contact-heading">
-  <p class="section-eyebrow" id="contact-heading">Contact</p>
-  <h2 class="contact-title">Let's work<br>together.</h2>
-  <div class="contact-body">
-    <p>小規模チーム・NPO・個人事業主の方からのご相談を受け付けています。</p>
-    <p>「めんどくさい」と感じていることがあれば、お気軽にご連絡ください。</p>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <span class="footer-name">Yuki Yamamoto</span>
-  <span class="footer-date">最終更新 2026-03-15</span>
-</footer>
-
-<script>
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 50);
-  }, { passive: true });
+<!-- Three.js 背景 -->
+<script type="importmap">
+  {"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
 </script>
 
+<script type="module">
+  import * as THREE from 'three';
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.getElementById('three-bg').style.display = 'none';
+  } else {
+    const canvas = document.getElementById('three-bg');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.z = 5;
+
+    const group = new THREE.Group();
+    scene.add(group);
+    const objects = [];
+
+    const shapeFactories = [
+      () => new THREE.TorusGeometry(0.6, 0.22, 28, 56),
+      () => new THREE.BoxGeometry(0.72, 0.72, 0.72, 6, 6, 6),
+      () => new THREE.OctahedronGeometry(0.58, 3),
+      () => new THREE.SphereGeometry(0.48, 28, 20),
+    ];
+
+    const COLS = 4, ROWS = 3;
+    let idx = 0;
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
+        const geo = shapeFactories[idx % shapeFactories.length]();
+        const mat = new THREE.MeshStandardMaterial({
+          wireframe: true,
+          transparent: true,
+          opacity: 0.28,
+          color: idx % 2 === 0 ? 0x0D9488 : 0x2DD4BF,
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        const x = ((col / (COLS - 1)) - 0.5) * 20 + (Math.random() - 0.5) * 2.5;
+        const y = ((row / (ROWS - 1)) - 0.5) * 13 + (Math.random() - 0.5) * 2;
+        const z = -4 - Math.random() * 5;
+        mesh.position.set(x, y, z);
+        mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+        mesh.userData.speed = {
+          x: (Math.random() - 0.5) * 0.003,
+          y: (Math.random() - 0.5) * 0.003,
+        };
+        group.add(mesh);
+        objects.push(mesh);
+        idx++;
+      }
+    }
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const dirLight = new THREE.DirectionalLight(0x0D9488, 1.2);
+    dirLight.position.set(3, 4, 5);
+    scene.add(dirLight);
+
+    const groupTarget = { x: 0, y: 0 };
+    const groupCurrent = { x: 0, y: 0 };
+    let drag = null;
+
+    function onPointerDown(x, y) { drag = { x, y }; }
+    function onPointerMove(x, y) {
+      if (!drag) return;
+      groupTarget.y += (x - drag.x) * 0.004;
+      groupTarget.x += (y - drag.y) * 0.004;
+      drag = { x, y };
+    }
+    function onPointerUp() { drag = null; }
+
+    canvas.addEventListener('mousedown',  e => onPointerDown(e.clientX, e.clientY));
+    window.addEventListener('mousemove',  e => onPointerMove(e.clientX, e.clientY));
+    window.addEventListener('mouseup',    () => onPointerUp());
+    canvas.addEventListener('touchstart', e => { const t = e.touches[0]; onPointerDown(t.clientX, t.clientY); }, { passive: true });
+    window.addEventListener('touchmove',  e => { const t = e.touches[0]; onPointerMove(t.clientX, t.clientY); }, { passive: true });
+    window.addEventListener('touchend',   () => onPointerUp());
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    const clock = new THREE.Clock();
+    (function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      objects.forEach(obj => {
+        obj.rotation.x += obj.userData.speed.x;
+        obj.rotation.y += obj.userData.speed.y;
+        obj.position.y += Math.sin(t * 0.3 + obj.position.x) * 0.0006;
+      });
+      groupCurrent.x += (groupTarget.x - groupCurrent.x) * 0.07;
+      groupCurrent.y += (groupTarget.y - groupCurrent.y) * 0.07;
+      group.rotation.x = groupCurrent.x;
+      group.rotation.y = groupCurrent.y;
+      renderer.render(scene, camera);
+    })();
+  }
+</script>
+
+<script>
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if (a.href === location.href) a.classList.add('active');
+  });
+</script>
+
+<script src="js/scroll-anim.js"></script>
+<script src="js/nav.js"></script>
 </body>
 </html>
